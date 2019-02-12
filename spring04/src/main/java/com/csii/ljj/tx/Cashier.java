@@ -21,6 +21,7 @@ public class Cashier {
         Integer userid =1;
         for (Integer isbn : isbns){
             bookShopService.purchase(userid,isbn);
+
         }
     }
 }
