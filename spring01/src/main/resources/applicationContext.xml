@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:bean-tuil="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+    <!-- bean工厂实例化的时候打印有哪些bean被实例化了，可考虑后期用日志打印出来-->
+    <bean id="instantiationTracingBeanPostProcessor" class="com.ljj.spring.beans.InstantiationTracingBeanPostProcessor"></bean>
+
+
+    <!--配置bean-->
+    <bean id="helloWrold2" class="com.ljj.spring.beans.HelloWorld" >
+        <property name="name" value="spring"></property>
+    </bean>
+    <!--通过构造器注入-->
+    <bean id="car" class="com.ljj.spring.beans.Car">
+        <constructor-arg value="Audi" index="0"></constructor-arg>
+        <constructor-arg  index="1">
+            <value><![CDATA[1234]]></value>
+        </constructor-arg>
+        <constructor-arg value="300000" type="double"/>
+    </bean>
+    <bean id="car2" class="com.ljj.spring.beans.Car">
+        <constructor-arg value="Audi" index="0"/>
+        <constructor-arg value="shanghai" index="1"/>
+        <constructor-arg value="300000" type="int"/>
+    </bean>
+
+    <bean id="person" class="com.ljj.spring.beans.Person">
+        <property name="name" value="tom"/>
+        <property name="age" value="22"/>
+        <property name="car" ref="car"/>
+    </bean>
+
+    <!--使用内部bean注入-->
+    <bean id="person2" class="com.ljj.spring.beans.Person">
+        <property name="name" value="jack"/>
+        <property name="age" value="20"/>
+        <property name="car">
+            <bean class="com.ljj.spring.beans.Car">
+                <constructor-arg value="changan" index="0"/>
+                 <constructor-arg value="123" index="1"/>
+                <constructor-arg value="100000" index="2"/>
+            </bean>
+        </property>
+    </bean>
+    <bean-tuil:list>
+
+    </bean-tuil:list>
+    <!--使用list注入-->
+    <bean id="person3" class="com.ljj.spring.beans.collection.Person">
+        <property name="name" value="兰晶晶"/>
+        <property name="age" value="23"/>
+        <property name="cars">
+            <list>
+                <ref bean="car"/>
+                <ref bean="car2"/>
+            </list>
+        </property>
+    </bean>
+
+    <!--使用Map注入-->
+    <bean id="newPerson" class="com.ljj.spring.beans.collection.NewPerson">
+        <property name="name" value="sam"/>
+        <property name="age"  value="21"/>
+        <property name="cars">
+            <map>
+                <entry key="car1" value-ref="car"/>
+                <entry key="car2" value-ref="car2"/>
+            </map>
+        </property>
+    </bean>
+
+    <!--使用prop注入，一般用于properties解析-->
+    <bean id="dataSource" class="com.ljj.spring.beans.collection.DataSource">
+        <property name="dataSource">
+            <props>
+                <prop key="userName">root</prop>
+                <prop key="password">1234</prop>
+                <prop key="jdbcUrl">jdbc:mysql:///test</prop>
+                <prop key="driverClass">com.mysql.jdbc.Driver</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

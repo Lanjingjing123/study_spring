@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--使用bean的scope作用域来创建实例，prototype是每次创建都一个新的实例bean-->
+    <bean id="car" class="com.ljj.spring.beans.scope.Car" scope="prototype">
+        <property name="banch" value="Audi"/>
+        <property name="price" value="2000000"/>
+    </bean>
+    <bean id="car2" class="com.ljj.spring.beans.scope.Car">
+        <property name="banch" value="Audi"/>
+        <property name="price" value="2000000"/>
+    </bean>
+</beans>

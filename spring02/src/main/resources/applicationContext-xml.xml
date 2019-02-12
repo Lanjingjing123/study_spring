@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--配置bean-->
+    <bean id="arithmeticCaculator" class="com.csii.ljj.aop.xml.ArithmeticCaculatorImpl"/>
+    <!--配置切面bean-->
+    <bean id="loggingAspect"  class="com.csii.ljj.aop.xml.LoggingAspect"/>
+    <bean id="validateAspect" class="com.csii.ljj.aop.xml.ValidateAspect"/>
+
+    <aop:config >
+    <!--配置切面表达式-->
+        <aop:pointcut id="pointcut" expression="execution(* com.csii.ljj.aop.xml.ArithmeticCaculator.*(..))"/>
+        <!--配置切面以及相关的通知-->
+        <aop:aspect ref="loggingAspect"  order="2">
+            <aop:before method="beforMethod" pointcut-ref="pointcut"></aop:before>
+            <aop:after method="afterMethod" pointcut-ref="pointcut"></aop:after>
+            <aop:after-returning method="afterReturning"  pointcut-ref="pointcut"></aop:after-returning>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="pointcut"></aop:after-throwing>
+        </aop:aspect>
+    </aop:config>
+    <bean class="com.csii.ljj.aop.impl.InstantiationTracingBeanPostProcessor">
+
+    </bean>
+</beans>
